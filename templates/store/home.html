@@ -1,0 +1,189 @@
+
+{% extends 'store/base.html' %}
+
+{% block title %}Home | PLANTAE{% endblock %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+                <span class="text-success fw-bold">
+                    WELCOME TO PLANTAE
+                </span>
+
+                <h1 class="hero-title">
+                    Bring Nature<br>
+                    <span>Into Your Home</span>
+                </h1>
+
+                <p class="lead text-muted">
+                    Discover beautiful indoor plants,
+                    garden plants and flowering plants
+                    for every corner of your home.
+                </p>
+
+                <a href="{% url 'plants' %}"
+                   class="btn btn-success btn-lg mt-3">
+                    Explore Plants
+                </a>
+            </div>
+
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <img src="https://i.pinimg.com/1200x/4c/17/1d/4c171dd85a5979b0f9cd2ce4304f0ac5.jpg"
+                     class="img-fluid hero-image"
+                     alt="Indoor plants">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+{% if featured_products %}
+
+<section class="container py-5">
+
+    <div class="section-heading text-center mb-4">
+        <h2>Featured Plants</h2>
+        <p>Our special collection</p>
+    </div>
+
+    <div id="plantCarousel"
+         class="carousel slide"
+         data-bs-ride="carousel">
+
+        <div class="carousel-inner">
+
+            {% for product in featured_products %}
+
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+
+                <div class="carousel-card">
+
+                    <div class="row align-items-center">
+
+                        <div class="col-md-6">
+                            <img src="{{ product.image_url }}"
+                                 class="carousel-image"
+                                 alt="{{ product.title }}">
+                        </div>
+
+                        <div class="col-md-6 p-4">
+
+                            <h3>{{ product.title }}</h3>
+
+                            <p>{{ product.description|truncatewords:25 }}</p>
+
+                            <h4 class="text-success">
+                                ₹{{ product.price }}
+                            </h4>
+
+                            <a href="{% url 'add_to_cart' product.id %}"
+                               class="btn btn-success mt-3">
+                                Add to Cart
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#plantCarousel"
+                data-bs-slide="prev">
+
+            <span class="carousel-control-prev-icon bg-success rounded-circle">
+            </span>
+        </button>
+
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#plantCarousel"
+                data-bs-slide="next">
+
+            <span class="carousel-control-next-icon bg-success rounded-circle">
+            </span>
+        </button>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<section class="container py-5">
+
+    <div class="section-heading text-center mb-4">
+        <h2>Recently Added Plants</h2>
+        <p>Find your perfect green companion</p>
+    </div>
+
+    <div class="row g-4">
+
+        {% for product in latest_products %}
+
+        <div class="col-6 col-md-4 col-lg-3">
+
+            <div class="product-card">
+
+                <img src="{{ product.image_url }}"
+                     class="product-image"
+                     alt="{{ product.title }}">
+
+                <div class="p-3">
+
+                    <small class="text-muted">
+                        {{ product.category }}
+                    </small>
+
+                    <h5 class="mt-2">
+                        {{ product.title }}
+                    </h5>
+
+                    <h6 class="text-success">
+                        ₹{{ product.price }}
+                    </h6>
+
+                    <a href="{% url 'add_to_cart' product.id %}"
+                       class="btn btn-outline-success w-100 mt-2">
+                        Add to Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="text-center">
+            No plants available yet. Add products from admin.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'plants' %}"
+           class="btn btn-success">
+            View All Plants
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

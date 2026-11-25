@@ -1,0 +1,137 @@
+
+{% extends 'store/base.html' %}
+
+{% block title %}My Cart | PLANTAE{% endblock %}
+
+{% block content %}
+
+<section class="container py-5">
+
+    <div class="section-heading text-center mb-5">
+        <h1>My Shopping Cart</h1>
+        <p>Your favourite plants are waiting for you</p>
+    </div>
+
+    {% if cart|length > 0 %}
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead class="table-light">
+                <tr>
+                    <th>Plant</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for item in cart %}
+
+                <tr>
+
+                    <td>
+                        <div class="d-flex align-items-center">
+
+                            <img src="{{ item.product.image_url }}"
+                                 class="cart-image"
+                                 alt="{{ item.product.title }}">
+
+                            <span class="ms-3">
+                                {{ item.product.title }}
+                            </span>
+
+                        </div>
+                    </td>
+
+                    <td>₹{{ item.price }}</td>
+
+                    <td>
+                        <form method="POST"
+                              action="{% url 'update_cart' item.product.id %}"
+                              class="d-flex gap-2">
+
+                            {% csrf_token %}
+
+                            <input type="number"
+                                   name="quantity"
+                                   value="{{ item.quantity }}"
+                                   min="1"
+                                   class="form-control quantity-input">
+
+                            <button type="submit"
+                                    class="btn btn-outline-success btn-sm">
+                                Update
+                            </button>
+
+                        </form>
+                    </td>
+
+                    <td>
+                        ₹{{ item.total_price }}
+                    </td>
+
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.product.id %}"
+                           class="btn btn-outline-danger btn-sm">
+                            Remove
+                        </a>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="text-end mt-4">
+
+        <h3>
+            Grand Total:
+            <span class="text-success">
+                ₹{{ cart.get_total_price }}
+            </span>
+        </h3>
+
+        <a href="{% url 'plants' %}"
+           class="btn btn-outline-success mt-3">
+            Continue Shopping
+        </a>
+
+        <button class="btn btn-success mt-3"
+                disabled>
+            Checkout Coming Soon
+        </button>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-cart text-center">
+
+        <h3>Your cart is empty</h3>
+
+        <p class="text-muted">
+            Start adding beautiful plants to your cart.
+        </p>
+
+        <a href="{% url 'plants' %}"
+           class="btn btn-success">
+            Shop Plants
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

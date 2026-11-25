@@ -1,0 +1,56 @@
+
+{% extends 'store/base.html' %}
+
+{% block title %}About Us | PLANTAE{% endblock %}
+
+{% block content %}
+
+<section class="container py-5">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-4">
+            <img src="https://i.pinimg.com/736x/58/8d/29/588d29c45862b521e3e14a565080aec2.jpg"
+                 class="img-fluid rounded-4"
+                 alt="Beautiful garden plants">
+        </div>
+
+        <div class="col-lg-6 mt-4 mt-lg-0">
+
+            <span class="text-success fw-bold">
+                ABOUT PLANTAE
+            </span>
+
+            <h1 class="mt-2">
+                Growing Happiness,
+                One Plant at a Time
+            </h1>
+
+            <p class="text-muted mt-3">
+                PLANTAE is an online plant store created
+                for people who love nature and greenery.
+            </p>
+
+            <p class="text-muted">
+                We offer a beautiful collection of indoor
+                plants, garden plants and flowering plants
+                to make your home and garden more vibrant.
+            </p>
+
+            <p class="text-muted">
+                Our mission is to make plants accessible
+                to everyone and encourage a greener lifestyle.
+            </p>
+
+            <a href="{% url 'plants' %}"
+               class="btn btn-success mt-3">
+                Explore Our Plants
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
